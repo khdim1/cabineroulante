@@ -1,8 +1,12 @@
-import os
+﻿import os
 from flask import Flask, render_template, request, jsonify
 from recommander import recommander
+from database import init_db
 
 app = Flask(__name__)
+
+# Initialiser la base de données au démarrage
+init_db()
 
 @app.route('/')
 def index():
