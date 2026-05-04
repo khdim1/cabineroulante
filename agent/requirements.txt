@@ -1,0 +1,5 @@
+depthai
+opencv-python
+mediapipe
+pyyaml
+websockets

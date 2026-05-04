@@ -1,0 +1,7 @@
+﻿camera:
+  position_hauteur_sol_m: 1.40
+capteurs:
+  calibration_poids: 2150.0
+seuils:
+  poids_min_kg: 5.0
+  stabilisation_secondes: 1.5

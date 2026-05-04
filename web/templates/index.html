@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cabine Scan</title>
+    <style>
+        body{ margin:0; background:#0a0a1a; color:#0ff; font-family:sans-serif; display:flex; height:100vh; }
+        .video{ flex:2; background:#000; display:flex; align-items:center; justify-content:center; }
+        .video img{ max-width:100%; max-height:100%; }
+        .panel{ flex:1; background:#111; padding:20px; display:flex; flex-direction:column; }
+        h1{ color:#f0f; text-shadow:0 0 10px #f0f; }
+        .mesures{ font-size:24px; margin:20px 0; }
+        .reco{ font-size:20px; color:#0f0; }
+        button{ padding:20px; font-size:28px; background:#0aa; border:none; color:#000; margin-top:auto; }
+    </style>
+</head>
+<body>
+    <div class="video"><img id="stream" src=""></div>
+    <div class="panel">
+        <h1>MESURES FLUOS </h1>
+        <div id="mesures" class="mesures">En attente...</div>
+        <div id="reco" class="reco"></div>
+        <button id="btnImprimer" disabled>IMPRIMER</button>
+    </div>
+    <script>
+        let mesuresFinales = null;
+        const ws = new WebSocket('ws://localhost:9001');
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            document.getElementById('stream').src = 'data:image/jpeg;base64,' + data.image;
+            const m = data.mesures;
+            if(m && m.status==='ok'){
+                document.getElementById('mesures').innerHTML = `
+                    Taille : ${m.taille} cm<br>
+                    Poids : ... <br>
+                    (mesures en direct)
+                `;
+                mesuresFinales = m;
+                document.getElementById('btnImprimer').disabled = false;
+            }
+        };
+        document.getElementById('btnImprimer').addEventListener('click', async()=>{
+            if(!mesuresFinales) return;
+            const resp = await fetch('/recommander', {
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body: JSON.stringify(mesuresFinales)
+            });
+            const fauteuil = await resp.json();
+            document.getElementById('reco').innerHTML = fauteuil.nom !== 'Aucun' ?
+                `Fauteuil : ${fauteuil.nom}<br>Largeur : ${fauteuil.largeur_assise_min}-${fauteuil.largeur_assise_max} cm` :
+                'Aucun modèle adapté';
+            window.print();
+        });
+    </script>
+</body>
+</html>

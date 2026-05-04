@@ -1,0 +1,18 @@
+camera:
+  modele: "OAK-D"
+  position_hauteur_sol_m: 1.40
+  resolution: [1920, 1080]
+
+capteurs:
+  calibration_poids: 2150.0
+  offset_poids: 0.0
+
+seuils:
+  poids_min_kg: 5.0
+  stabilisation_secondes: 1.5
+
+recommandations:
+  tolerance_largeur_assise_cm: 3        # élargi
+  tolerance_profondeur_assise_cm: 3
+  tolerance_hauteur_dossier_cm: 5
+  marge_hauteur_assise_cm: 2           # le fauteuil doit être plus bas que la hauteur poplitée d'au moins 2 cm

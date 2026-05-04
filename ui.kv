@@ -1,0 +1,49 @@
+#:kivy 2.0
+<CabineScreen>:
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: 0.02, 0.01, 0.05, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            text: "[b]MESURES FLUO[/b]"
+            font_size: 48
+            color: 0, 1, 1, 1
+            markup: True
+            pos_hint: {"center_x": 0.5, "top": 0.98}
+            outline_color: 0.2,0.2,0.8,1
+            outline_width: 2
+        Image:
+            id: avatar
+            pos_hint: {"center_x": 0.7, "top": 0.8}
+            size_hint: (0.5, 0.5)
+            allow_stretch: True
+            keep_ratio: True
+        Label:
+            id: lbl_mesures
+            text: "En attente..."
+            font_size: 28
+            color: 1, 0.6, 0.9, 1
+            pos_hint: {"x": 0.02, "top": 0.8}
+            size_hint: (0.45, 0.4)
+            halign: "left"
+            valign: "top"
+            markup: True
+        Label:
+            id: lbl_reco
+            text: ""
+            font_size: 24
+            color: 0.5, 1, 0.5, 1
+            pos_hint: {"center_x": 0.5, "y": 0.15}
+            size_hint: (0.9, 0.3)
+            halign: "center"
+        Button:
+            text: "IMPRIMER"
+            font_size: 36
+            background_color: 0.1, 0.8, 0.8, 1
+            color: 0,0,0,1
+            pos_hint: {"center_x": 0.5, "y": 0.02}
+            size_hint: (0.5, 0.08)
+            on_press: root.imprimer()

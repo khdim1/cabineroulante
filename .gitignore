@@ -1,0 +1,10 @@
+__pycache__/
+venv/
+*.pyc
+dist/
+*.spec
+
+agent/build/
+agent/dist/
+*.spec
+web/__pycache__/
